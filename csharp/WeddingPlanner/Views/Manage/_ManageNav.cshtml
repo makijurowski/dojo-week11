@@ -1,4 +1,4 @@
-﻿@using WeddingPlanner.Views.Manage
+﻿@using MWeddingPlannerViews.Manage
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
