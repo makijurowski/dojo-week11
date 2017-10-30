@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,53 +9,39 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore.Extensions;
 using RESTauranter.Models;
 
 namespace RESTauranter
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; private set; }
-
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(env.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IConfiguration Configuration;
+            services.AddConfiguration(out Configuration);
+
+            // if (Configuration["Database:Type"] == "SQLite")
+            // {
+            //     services.AddDbContext<aspnetContext>(x => x.UseSqlite(Configuration["Database:ConnectionString"]));
+            // }
+            // else if (Configuration["Database:Type"] == "MySQL")
+            // {
+            //     services.AddDbContext<aspnetContext>(x => x.UseMySql(Configuration["Database:ConnectionString"]));
+            // }
+
             services.AddMvc();
-            services.Configure<MySqlOptions>(Configuration.GetSection("DBInfo"));
-            services.AddScoped<DbConnector>();
-            services.AddDbContext<RestaurantContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
+            services.AddMemoryCache();
+            services.AddSession(x => x.IdleTimeout = TimeSpan.FromMinutes(20));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
+            loggerFactory.AddConsole(LogLevel.Warning, true);
+            app.UseDeveloperExceptionPage();
+            app.UseSession();
             app.UseStaticFiles();
-
             app.UseMvc();
         }
     }

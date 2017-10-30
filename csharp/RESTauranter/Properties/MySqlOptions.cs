@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 
 namespace RESTauranter
 {
