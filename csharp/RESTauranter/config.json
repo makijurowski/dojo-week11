@@ -1,8 +1,0 @@
-{
-    "Account": "root",
-    "Password": "root",
-    "Database": {
-        "Type": "MySQL",
-        "ConnectionString": "Server=localhost; Uid=root; Pwd=root; port=3306; Database=aspnet"
-    }
-}

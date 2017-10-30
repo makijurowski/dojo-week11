@@ -160,3 +160,5 @@ csharp/DojoLeague/wwwroot/*
 csharp/Demos/efcore/*
 csharp/RESTauranter/wwwroot/*
 csharp/RESTauranter/appsettings.json
+csharp/Restaurant/appsettings.json
+csharp/Restaurant/wwwroot/*
