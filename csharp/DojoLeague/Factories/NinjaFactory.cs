@@ -10,11 +10,11 @@ namespace DojoLeague.Factories
 {
     public class NinjaFactory : IFactory<Ninja>
     {
-        public void Add(Ninja ninja)
+        public void AddNinja(Ninja ninja)
         {
             using(IDbConnection dbConnection = Connection)
             {
-                string query = "INSERT INTO Ninjas (Name, Level, Location, Description) VALUES(@Name, @Level, @Location, @Description; SELECT LAST_INSERT_ID() as Id";
+                string query = "INSERT INTO Ninjas (Name, Level, Location, Description) VALUES(@Name, @Level, @Location, @Description); SELECT LAST_INSERT_ID() as Id";
                 dbConnection.Open();
                 dbConnection.Execute(query, ninja);
             }

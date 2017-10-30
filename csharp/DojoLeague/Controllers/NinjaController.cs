@@ -18,5 +18,25 @@ namespace DojoLeague.Controllers
         {
             ninjaFactory = new NinjaFactory();
         }
+
+        [HttpGet]
+        [Route("ninja")]
+        public IActionResult Index()
+        {
+            ViewBag.AllNinjas = ninjaFactory.FindAll();
+            ViewBag.Ninja1 = ninjaFactory.FindById(1);
+            ViewBag.Seattle = ninjaFactory.FindByLocation("Seattle");
+            ViewBag.Maki = ninjaFactory.FindByName("Maki");
+            return View("ninja");
+        }
+
+        [HttpPost]
+        [Route("AddNinja")]
+        public IActionResult AddNinja(Ninja ninja)
+        {
+            ViewBag.NewNinja = ninja;
+            ninjaFactory.AddNinja(ninja);
+            return RedirectToAction("Index", "Ninja");
+        }
     }
 }

@@ -10,11 +10,11 @@ namespace DojoLeague.Factories
 {
     public class DojoFactory : IFactory<Dojo>
     {
-        public void Add(Dojo dojo)
+        public void AddDojo(Dojo dojo)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string query = "INSERT INTO Dojos (Name, Level, Location, Description) VALUES(@Name, @Level, @Location, @Description; SELECT LAST_INSERT_ID() as Id";
+                string query = "INSERT INTO Dojos (Name, Location, Information) VALUES(@Name, @Location, @Information); SELECT LAST_INSERT_ID() as Id";
                 dbConnection.Open();
                 dbConnection.Execute(query, dojo);
             }
