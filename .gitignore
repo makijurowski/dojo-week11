@@ -162,3 +162,6 @@ csharp/RESTauranter/wwwroot/*
 csharp/RESTauranter/appsettings.json
 csharp/Restaurant/appsettings.json
 csharp/Restaurant/wwwroot/*
+csharp/Demos/asp_identity_core_ef/*
+csharp/WeddingPlanner/wwwroot/*
+*appsettings.json
