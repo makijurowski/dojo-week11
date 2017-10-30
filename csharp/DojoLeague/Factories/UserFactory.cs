@@ -10,14 +10,14 @@ namespace DojoLeague.Factories
 {
     public class UserFactory : IFactory<User>
     {
-        private string connectionString;
+        private new string connectionString;
 
         public UserFactory()
         {
             connectionString = "server=localhost;userid=root;password=root;port=3306;database=mydb;SslMode=None";
         }
 
-        internal IDbConnection Connection
+        internal new IDbConnection Connection
         {
             get
             {
