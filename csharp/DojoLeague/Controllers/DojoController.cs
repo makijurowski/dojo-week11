@@ -7,26 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using DojoLeague.Factories;
 using DojoLeague.Models;
+using DojoLeague.Controllers;
 
 namespace DojoLeague.Controllers
 {
     public class DojoController : Controller
     {
         private readonly DojoFactory dojoFactory;
+        private readonly NinjaFactory ninjaFactory;
 
         public DojoController()
         {
             dojoFactory = new DojoFactory();
+            ninjaFactory = new NinjaFactory();
         }
 
         [HttpGet]
-        [Route("dojo")]
-        public IActionResult Index()
+        [Route("Dojo")]
+        public IActionResult DojoIndex()
         {
+            ViewBag.Dojo = null;
             ViewBag.AllDojos = dojoFactory.FindAll();
-            ViewBag.Dojo1 = dojoFactory.FindById(1);
-            ViewBag.Maki = dojoFactory.FindNinjasByLocation("Seattle");
-            return View("dojo");
+            ViewBag.AllNinjas = ninjaFactory.FindAll();
+            return View("Dojo");
         }
 
         [HttpPost]
@@ -36,6 +39,17 @@ namespace DojoLeague.Controllers
             ViewBag.NewDojo = dojo;
             dojoFactory.AddDojo(dojo);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("Dojo/{id}")]
+        public IActionResult DojoDetails(int id)
+        {
+            ViewBag.dojo_id = id;
+            ViewBag.Dojo = dojoFactory.FindById(id);
+            ViewBag.AllDojos = dojoFactory.FindAll();
+            ViewBag.AllNinjas = ninjaFactory.FindAll();
+            return View("Dojo");
         }
     }
 }

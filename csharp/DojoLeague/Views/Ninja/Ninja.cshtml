@@ -1,9 +1,41 @@
 @using DojoLeague.Models;
 @using Microsoft.AspNetCore.Http;
 
-<!-- <div class="row section">
-    <div class="col s6 m6 l6" id="ninja-form">@Html.Partial("./Partials/NinjaForm")</div>
-    <div class="col s6 m6 l6" id="dojo-form">@Html.Partial("./Partials/DojoForm")</div>
-</div> -->
+@{
+    var AllNinjas = ViewBag.AllNinjas;
+}
 
-Ninja added!
+<div class="row">
+    <div class="col-sm-s4" id="all-ninjas">
+        @if (@ViewBag.Ninja == null)
+        {
+            <h2>Registered Ninjas</h2>
+            <table class="table">
+                <tr>
+                    <td>
+                        <h5>Ninja Name</h5>
+                    </td>
+                </tr>
+                @foreach (dynamic ninja in AllNinjas)
+                {
+                    <tr>
+                        <td>
+                            <a href="/Ninja/@ninja.Id"><h5>@ninja.Name</h5></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (@ViewBag.Ninja != null)
+        {
+            <h2>@ViewBag.Ninja.Name</h2>
+            <h2>@ViewBag.Ninja.Level</h2>
+            <h5>@ViewBag.Ninja.Location</h5>
+            <h5>@ViewBag.Ninja.Description</h5>
+        }
+    </div>
+    <div class="col-sm-s4" id="ninja-form">
+        <h2>Register A Ninja</h2>
+        @Html.Partial("./Partials/NinjaForm")
+    </div>
+</div> 

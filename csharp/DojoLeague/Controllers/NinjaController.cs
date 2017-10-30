@@ -7,27 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using DojoLeague.Factories;
 using DojoLeague.Models;
+using DojoLeague.Controllers;
 
 namespace DojoLeague.Controllers
 {
     public class NinjaController : Controller
     {
         private readonly NinjaFactory ninjaFactory;
+        private readonly DojoFactory dojoFactory;
         
         public NinjaController()
         {
             ninjaFactory = new NinjaFactory();
+            dojoFactory = new DojoFactory();
         }
 
         [HttpGet]
-        [Route("ninja")]
-        public IActionResult Index()
+        [Route("Ninja")]
+        public IActionResult NinjaIndex()
         {
+            ViewBag.Ninja = null;
             ViewBag.AllNinjas = ninjaFactory.FindAll();
-            ViewBag.Ninja1 = ninjaFactory.FindById(1);
-            ViewBag.Seattle = ninjaFactory.FindByLocation("Seattle");
-            ViewBag.Maki = ninjaFactory.FindByName("Maki");
-            return View("ninja");
+            ViewBag.AllDojos = dojoFactory.FindAll();
+            return View("Ninja");
         }
 
         [HttpPost]
@@ -36,7 +38,18 @@ namespace DojoLeague.Controllers
         {
             ViewBag.NewNinja = ninja;
             ninjaFactory.AddNinja(ninja);
-            return RedirectToAction("Index", "Ninja");
+            return RedirectToAction("NinjaIndex", "Ninja");
+        }
+
+        [HttpGet]
+        [Route("Ninja/{id}")]
+        public IActionResult NinjaDetails(int id)
+        {
+            ViewBag.ninja_id = id;
+            ViewBag.AllNinjas = ninjaFactory.FindAll();
+            ViewBag.AllDojos = dojoFactory.FindAll();
+            ViewBag.Ninja = ninjaFactory.FindById(id);
+            return View("Ninja");
         }
     }
 }

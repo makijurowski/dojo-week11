@@ -1,10 +1,68 @@
 @using DojoLeague.Models;
 @using Microsoft.AspNetCore.Http;
 
-<!-- 
-<div class="row section">
-    <div class="col s6 m6 l6" id="ninja-form">@Html.Partial("./Partials/NinjaForm")</div>
-    <div class="col s6 m6 l6" id="dojo-form">@Html.Partial("./Partials/DojoForm")</div>
-</div> -->
+@{
+    var AllDojos = ViewBag.AllDojos;
+}
 
-Add Dojo!
+<div class="row">
+    <div class="col-sm-s4" id="all-dojos">
+        @if(@ViewBag.Dojo == null)
+        {
+            <h2>All Dojos</h2>
+            <table class="table">
+                <tr>
+                    <td>
+                        <h5>Dojo Name</h5>
+                    </td>
+                </tr>
+                @foreach (dynamic dojo in AllDojos)
+                {
+                    <tr>
+                        <td>
+                            <a href="/Dojo/@dojo.Id"><h5>@dojo.Name</h5></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (@ViewBag.Dojo != null)
+        {
+            <h2>@ViewBag.Dojo.Name</h2>
+            <h5>@ViewBag.Dojo.Location</h5>
+            <h5>@ViewBag.Dojo.Information</h5>
+
+            <h4>Current Members</h4>
+            <table class="table">
+                <tr>
+                    <td>
+                        <h5>Name</h5>
+                    </td>
+                    <td>
+                        <h5>Action</h5>
+                    </td>
+                </tr>
+                @foreach (dynamic ninja in @ViewBag.AllNinjas)
+                {
+                    @if (@ninja.Location == @ViewBag.Dojo.Location)
+                    {
+                        <tr>
+                            <td>
+                                @ninja.Name
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="Ninja/remove">Banish!</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        }
+    </div>
+    <div class="col-sm-s4" id="dojo-form">
+        <h2>Add a New Dojo</h2>
+        @Html.Partial("./Partials/DojoForm")
+    </div>
+</div> 
