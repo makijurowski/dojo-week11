@@ -159,3 +159,4 @@ csharp/TimeDisplay/wwwroot/*
 csharp/DojoLeague/wwwroot/*
 csharp/Demos/efcore/*
 csharp/RESTauranter/wwwroot/*
+csharp/RESTauranter/appsettings.json
