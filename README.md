@@ -1,2 +1,1 @@
-# dojo-week11
-# dojo-week11
+# Coding Dojo Classwork - Week 11
