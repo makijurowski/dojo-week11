@@ -17,5 +17,7 @@ namespace QuotingDojo.Models
 
         public DbSet<Author> authors { get; set; }
         public DbSet<Quote> quotes { get; set; }
+        public DbSet<Category> categories { get; set; }
+        
     }
 }
