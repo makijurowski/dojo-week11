@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WeddingPlanner
+namespace WeddingPlanner.Models
 {
     public partial class Users
     {

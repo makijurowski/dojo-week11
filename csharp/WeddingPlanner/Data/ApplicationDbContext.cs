@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanner.Models;
+using WeddingPlanner.Services;
 
-namespace WeddingPlanner.Data
+namespace WeddingPlanner
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -14,6 +15,10 @@ namespace WeddingPlanner.Data
             : base(options)
         {
         }
+
+        public new DbSet<Users> Users { get; set; }
+        public DbSet<Weddings> Weddings { get; set; }
+        public DbSet<Rsvps> Rsvps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

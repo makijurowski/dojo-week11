@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WeddingPlanner
+namespace WeddingPlanner.Models
 {
     public partial class Weddings
     {
         public Weddings()
         {
-            Rsvps = new HashSet<Rsvps>();
+            var Rsvps = new HashSet<Rsvps>();
         }
 
         public int WeddingId { get; set; }
@@ -15,9 +15,10 @@ namespace WeddingPlanner
         public string GroomName { get; set; }
         public DateTime? Date { get; set; }
         public string Address { get; set; }
-        public int UserId { get; set; }
+        public Users Guest { get; set; }
+        public int GuestId { get; set; }
 
         public Users User { get; set; }
-        public ICollection<Rsvps> Rsvps { get; set; }
+        public ICollection<Rsvps> Guests { get; set; }
     }
 }
