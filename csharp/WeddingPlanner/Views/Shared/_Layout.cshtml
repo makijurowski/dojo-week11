@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/css/materialize.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -11,25 +12,26 @@
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper teal">
-            <div class="container">
-                <a href="#" 
-
-                class="brand-logo">ASP with Material Design</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo"><i class="material-icons">cake</i>Wedding Planner</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="material-icons">home</i></a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="About"><i class="material-icons">info</i></a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Contact"><i class="material-icons">business</i></a></li>
+                @await Html.PartialAsync("_LoginPartial")
+            </ul>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <div class="container">
-        @RenderBody()
-        <hr />
-    </div>
+    <main>
+        <div class="container">
+            @RenderBody()
+            <div class="divider"></div>
+        </div>
+    </main>
 
     <footer class="page-footer teal">
         <div class="container">
@@ -58,6 +60,8 @@
             </div>
         </div>
     </footer>
+
+    @RenderSection("Scripts", required: false)
 
     <script src="~/js/jquery-1.10.2.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>

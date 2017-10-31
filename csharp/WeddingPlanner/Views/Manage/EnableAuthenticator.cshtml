@@ -31,14 +31,14 @@
                 with a unique code. Enter the code in the confirmation box below.
             </p>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col m6">
                     <form method="post">
-                        <div class="form-group">
+                        <div class="input-field">
                             <label asp-for="Code" class="control-label">Verification Code</label>
-                            <input asp-for="Code" class="form-control" autocomplete="off" />
+                            <input asp-for="Code" class="validate" autocomplete="off" />
                             <span asp-validation-for="Code" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-default">Verify</button>
+                        <button type="submit" class="waves-effect waves-light btn">Verify</button>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     </form>
                 </div>
