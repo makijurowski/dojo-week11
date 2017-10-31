@@ -27,9 +27,10 @@ namespace QuotingDojo
         }
 
         [HttpPost]
-        [Route("")]
-        public IActionResult Index(Author newAuthor)
+        [Route("author/create")]
+        public IActionResult AddAuthor(AuthorViewModel newAuthor)
         {
+            TryValidateModel(newAuthor);
             if (ModelState.IsValid)
             {
                 int last_author_id = _context.authors.LastOrDefault().author_id;

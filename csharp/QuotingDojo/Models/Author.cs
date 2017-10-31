@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuotingDojo.Models
 {
-    public class Author
+    public class Author : BaseEntity
     {
         [Key]
         public int author_id { get; set; }
