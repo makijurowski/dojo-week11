@@ -11,16 +11,16 @@ using WeddingPlanner.Controllers;
 
 namespace WeddingPlanner
 {
-    public class wedding_plannerContext : ApplicationDbContext
+    public class wedding_plannerContext : DbContext
     {
-        public new virtual DbSet<Rsvps> Rsvps { get; set; }
-        public new virtual DbSet<Users> Users { get; set; }
-        public new virtual DbSet<Weddings> Weddings { get; set; }
-
-        public wedding_plannerContext()
+        public wedding_plannerContext(DbContextOptions<wedding_plannerContext> options)
             : base(options)
         {
         }
+
+        public virtual DbSet<Rsvps> Rsvps { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Weddings> Weddings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -11,10 +11,11 @@ namespace QuotingDojo.Models
     public class QuotingDojoContext : DbContext
     {
         public QuotingDojoContext(DbContextOptions<QuotingDojoContext> options)
+            : base(options)
         {
+        }
 
-        }   
-
-        // public DbSet<Author> authors { get; set; }
+        public DbSet<Author> authors { get; set; }
+        public DbSet<Quote> quotes { get; set; }
     }
 }

@@ -16,9 +16,9 @@ namespace WeddingPlanner
         {
         }
 
-        public new DbSet<Users> Users { get; set; }
-        public DbSet<Weddings> Weddings { get; set; }
-        public DbSet<Rsvps> Rsvps { get; set; }
+        // public new DbSet<Users> Users { get; set; }
+        // public DbSet<Weddings> Weddings { get; set; }
+        // public DbSet<Rsvps> Rsvps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
