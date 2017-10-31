@@ -1,63 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using WeddingPlanner.Models;
+using WeddingPlanner.Data;
+using WeddingPlanner.Services;
+using WeddingPlanner.Controllers;
 
 namespace WeddingPlanner
 {
-    public partial class wedding_plannerContext : DbContext
+    public class wedding_plannerContext : ApplicationDbContext
     {
-        public virtual DbSet<Rsvps> Rsvps { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Weddings> Weddings { get; set; }
+        public new virtual DbSet<Rsvps> Rsvps { get; set; }
+        public new virtual DbSet<Users> Users { get; set; }
+        public new virtual DbSet<Weddings> Weddings { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public wedding_plannerContext()
+            : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("Server=127.0.0.1;User Id=root;Password=root;Database=wedding_planner");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Rsvps>(entity =>
             {
-                entity.HasKey(e => new { e.RsvpId, e.UsersUserId, e.WeddingId, e.UserId });
+                entity.HasKey(e => new { e.RsvpId, e.GuestId, e.WeddingId, e.Weddings });
 
                 entity.ToTable("rsvps");
 
-                entity.HasIndex(e => e.UsersUserId)
+                entity.HasIndex(e => e.GuestId)
                     .HasName("fk_rsvps_users1_idx");
 
-                entity.HasIndex(e => new { e.WeddingId, e.UserId })
+                entity.HasIndex(e => new { e.WeddingId, e.GuestId })
                     .HasName("fk_rsvps_weddings1_idx");
 
                 entity.Property(e => e.RsvpId)
                     .HasColumnName("rsvp_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.UsersUserId)
-                    .HasColumnName("users_user_id")
+                entity.Property(e => e.GuestId)
+                    .HasColumnName("users_guest_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.WeddingId)
                     .HasColumnName("wedding_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.GuestId)
                     .HasColumnName("user_id")
                     .HasColumnType("int(11)");
 
-                entity.HasOne(d => d.UsersUser)
-                    .WithMany(p => p.Rsvps)
-                    .HasForeignKey(d => d.UsersUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_rsvps_users1");
-
                 entity.HasOne(d => d.Weddings)
-                    .WithMany(p => p.Rsvps)
-                    .HasForeignKey(d => new { d.WeddingId, d.UserId })
+                    .WithMany(p => p.Guests)
+                    .HasForeignKey(d => new { d.WeddingId, d.GuestId })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_rsvps_weddings1");
             });
@@ -92,18 +89,18 @@ namespace WeddingPlanner
 
             modelBuilder.Entity<Weddings>(entity =>
             {
-                entity.HasKey(e => new { e.WeddingId, e.UserId });
+                entity.HasKey(e => new { e.WeddingId, e.GuestId });
 
                 entity.ToTable("weddings");
 
-                entity.HasIndex(e => e.UserId)
+                entity.HasIndex(e => e.GuestId)
                     .HasName("fk_weddings_users_idx");
 
                 entity.Property(e => e.WeddingId)
                     .HasColumnName("wedding_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.GuestId)
                     .HasColumnName("user_id")
                     .HasColumnType("int(11)");
 
@@ -125,7 +122,7 @@ namespace WeddingPlanner
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Weddings)
-                    .HasForeignKey(d => d.UserId)
+                    .HasForeignKey(d => d.GuestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_weddings_users");
             });

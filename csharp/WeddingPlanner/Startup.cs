@@ -32,7 +32,7 @@ namespace WeddingPlanner
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddRouting(option => option.LowercaseUrls=true);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddSession();
             services.AddMvc();
@@ -59,6 +59,9 @@ namespace WeddingPlanner
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "weddings",
+                    template: "{controller=Weddings}/{action=Index}/{id?}");
             });
         }
     }
