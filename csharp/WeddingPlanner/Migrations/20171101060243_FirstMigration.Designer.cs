@@ -11,9 +11,10 @@ using WeddingPlanner;
 namespace WeddingPlanner.Migrations
 {
     [DbContext(typeof(wedding_plannerContext))]
-    partial class wedding_plannerContextModelSnapshot : ModelSnapshot
+    [Migration("20171101060243_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +74,15 @@ namespace WeddingPlanner.Migrations
                         .HasColumnName("password")
                         .HasMaxLength(255);
 
+                    b.Property<int?>("RsvpsRsvpId");
+
+                    b.Property<int?>("RsvpsUserId");
+
+                    b.Property<int?>("RsvpsWeddingId");
+
                     b.HasKey("UserId");
+
+                    b.HasIndex("RsvpsRsvpId", "RsvpsUserId", "RsvpsWeddingId");
 
                     b.ToTable("users");
                 });
@@ -101,6 +110,12 @@ namespace WeddingPlanner.Migrations
                         .HasColumnName("groom_name")
                         .HasMaxLength(45);
 
+                    b.Property<int?>("RsvpsRsvpId");
+
+                    b.Property<int?>("RsvpsUserId");
+
+                    b.Property<int?>("RsvpsWeddingId");
+
                     b.Property<int>("UserId")
                         .HasColumnName("user_id")
                         .HasColumnType("int(11)");
@@ -108,6 +123,8 @@ namespace WeddingPlanner.Migrations
                     b.HasKey("WeddingId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("RsvpsRsvpId", "RsvpsUserId", "RsvpsWeddingId");
 
                     b.ToTable("weddings");
                 });
@@ -129,12 +146,23 @@ namespace WeddingPlanner.Migrations
                         .HasForeignKey("RsvpId1", "RsvpUserId", "RsvpWeddingId");
                 });
 
+            modelBuilder.Entity("WeddingPlanner.Models.Users", b =>
+                {
+                    b.HasOne("WeddingPlanner.Models.Rsvps")
+                        .WithMany("Users")
+                        .HasForeignKey("RsvpsRsvpId", "RsvpsUserId", "RsvpsWeddingId");
+                });
+
             modelBuilder.Entity("WeddingPlanner.Models.Weddings", b =>
                 {
                     b.HasOne("WeddingPlanner.Models.Users", "User")
                         .WithMany("Weddings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WeddingPlanner.Models.Rsvps")
+                        .WithMany("Weddings")
+                        .HasForeignKey("RsvpsRsvpId", "RsvpsUserId", "RsvpsWeddingId");
                 });
 #pragma warning restore 612, 618
         }

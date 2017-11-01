@@ -6,10 +6,7 @@ namespace WeddingPlanner.Models
     public partial class Rsvps
     {
         public Rsvps()
-        {
-            Weddings = new HashSet<Weddings>();
-            Users = new HashSet<Users>();
-        }
+        {}
 
         public int RsvpId { get; set; }
         public Rsvps Rsvp { get; set; }
@@ -19,8 +16,5 @@ namespace WeddingPlanner.Models
 
         public int WeddingId { get; set; }
         public Weddings Wedding { get; set; }
-
-        public ICollection<Weddings> Weddings { get; set; }
-        public ICollection<Users> Users { get; set; }
     }
 }
