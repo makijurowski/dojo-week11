@@ -8,10 +8,22 @@ namespace QuotingDojo.Models
     {
         [Key]
         public int quote_id { get; set; }
+        public string quote_text { get; set; }
 
-        public string quote { get; set; }
         public int author_id { get; set; }
-        public Nullable<System.DateTime> created_at { get; }
-        public Nullable<System.DateTime> updated_at { get; }
+        public Author author { get; set; }
+
+        public int category_id { get; set; }
+        public Category category { get; set; }
+
+        public int note_id { get; set; }
+        public Note note { get; set; }
+
+        // public List<QuoteCategory> quote_categories { get; set; }
+
+        public Quote()
+        {
+            // quote_categories = new List<QuoteCategory>();
+        }
     }
 }

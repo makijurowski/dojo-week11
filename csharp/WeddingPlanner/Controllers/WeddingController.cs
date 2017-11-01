@@ -41,7 +41,7 @@ namespace WeddingPlanner.Controllers
 
             Dashboard dashData = new Dashboard
             {
-                Weddings = _context.Weddings.Include(w => w.Guests).ToList(),
+                Weddings = _context.Weddings.Include(w => w.UserId).ToList(),
                 User = ActiveUser
             };
             return View(dashData);
@@ -71,7 +71,7 @@ namespace WeddingPlanner.Controllers
                     GroomName = newWedding.GroomName,
                     Date = newWedding.Date,
                     Address = newWedding.Address,
-                    GuestId = ActiveUser.UserId
+                    UserId = ActiveUser.UserId
                 };
                 _context.Weddings.Add(wedding);
                 _context.SaveChanges();
@@ -88,7 +88,7 @@ namespace WeddingPlanner.Controllers
             }
             Rsvps rsvp = new Rsvps
             {
-                GuestId = ActiveUser.UserId,
+                UserId = ActiveUser.UserId,
                 WeddingId = id
             };
             _context.Rsvps.Add(rsvp);
@@ -103,7 +103,7 @@ namespace WeddingPlanner.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Rsvps toDelete = _context.Rsvps.Where(r => r.WeddingId == id)
-                                           .Where(r => r.GuestId == ActiveUser.UserId)
+                                           .Where(r => r.UserId == ActiveUser.UserId)
                                            .SingleOrDefault();
             _context.Rsvps.Remove(toDelete);
             _context.SaveChanges();
@@ -116,7 +116,8 @@ namespace WeddingPlanner.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View(_context.Weddings.Include(w => w.Guests).ThenInclude(g => g.Guest).Where(w => w.WeddingId == id).SingleOrDefault());
+            // return View(_context.Weddings.Include(w => w.Users).ThenInclude(g => g.UserId).Where(w => w.WeddingId == id).SingleOrDefault());
+            return View(_context.Weddings);
         }
     }
 }
