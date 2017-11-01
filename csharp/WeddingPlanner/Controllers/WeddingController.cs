@@ -21,13 +21,13 @@ namespace WeddingPlanner.Controllers
 {
     public class WeddingController : Controller
     {
-        private readonly wedding_plannerContext _context;
+        private readonly ApplicationDbContext _context;
         private Users ActiveUser
         {
             get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
         }
         
-        public WeddingController(wedding_plannerContext context)
+        public WeddingController(ApplicationDbContext context)
         {
             _context = context;
         }

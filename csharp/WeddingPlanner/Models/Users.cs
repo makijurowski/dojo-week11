@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WeddingPlanner.Models
 {
-    public partial class Users
+    public partial class Users : BaseEntity
     {
         public Users()
         {}
 
+        [Key]
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

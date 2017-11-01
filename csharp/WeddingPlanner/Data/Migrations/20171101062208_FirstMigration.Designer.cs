@@ -11,9 +11,10 @@ using WeddingPlanner;
 namespace WeddingPlanner.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171101062208_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,11 +183,15 @@ namespace WeddingPlanner.Data.Migrations
                     b.Property<int>("RsvpId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("RsvpId1");
+
                     b.Property<int>("UserId");
 
                     b.Property<int>("WeddingId");
 
                     b.HasKey("RsvpId");
+
+                    b.HasIndex("RsvpId1");
 
                     b.HasIndex("UserId");
 
@@ -282,6 +287,10 @@ namespace WeddingPlanner.Data.Migrations
 
             modelBuilder.Entity("WeddingPlanner.Models.Rsvps", b =>
                 {
+                    b.HasOne("WeddingPlanner.Models.Rsvps", "Rsvp")
+                        .WithMany()
+                        .HasForeignKey("RsvpId1");
+
                     b.HasOne("WeddingPlanner.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

@@ -27,7 +27,7 @@ namespace WeddingPlanner
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<wedding_plannerContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<wedding_plannerContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -16,6 +16,10 @@ namespace WeddingPlanner
         {
         }
 
+        public virtual DbSet<Rsvps> Rsvps { get; set; }
+        public new virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Weddings> Weddings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -128,7 +128,7 @@ namespace WeddingPlanner.Controllers
 
             if (result.Succeeded)
             {
-                HttpContext.Session.SetString("id", user.Id);
+                // HttpContext.Session.SetString("id", user.Id);
                 _logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
@@ -183,7 +183,7 @@ namespace WeddingPlanner.Controllers
 
             if (result.Succeeded)
             {
-                HttpContext.Session.SetString("id", user.Id);
+                // HttpContext.Session.SetString("id", user.Id);
                 _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
@@ -231,7 +231,7 @@ namespace WeddingPlanner.Controllers
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    HttpContext.Session.SetString("id", user.Id);
+                    // HttpContext.Session.SetString("id", user.Id);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -251,7 +251,7 @@ namespace WeddingPlanner.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            HttpContext.Session.SetString("id", null);
+            // HttpContext.Session.SetString("id", null);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

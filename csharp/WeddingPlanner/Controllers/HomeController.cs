@@ -13,7 +13,8 @@ namespace WeddingPlanner.Controllers
 {
     public class HomeController : Controller
     {
-        private wedding_plannerContext _context;
+        private ApplicationDbContext _context;
+
         private Users ActiveUser
         {
             get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
@@ -23,7 +24,7 @@ namespace WeddingPlanner.Controllers
             get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
         }
 
-        public HomeController(wedding_plannerContext context)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }
