@@ -14,10 +14,10 @@ namespace QuotingDojo.Models
             : base(options)
         {
         }
-
         public DbSet<Author> authors { get; set; }
         public DbSet<Quote> quotes { get; set; }
         public DbSet<Category> categories { get; set; }
-        
+        public DbSet<Note> notes { get; set; }
+        // public DbSet<QuoteCategory> quote_categories { get; set; }
     }
 }

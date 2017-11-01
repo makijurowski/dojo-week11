@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuotingDojo.Models
 {
-    public class AuthorViewModel
+    public class AuthorViewModel : BaseEntity
     {
         [Required]
-        public string name { get; set; }
+        [MinLength(2)]
+        public string author_name { get; set; }
     }
 }

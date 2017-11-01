@@ -8,9 +8,13 @@ namespace QuotingDojo.Models
     {
         [Key]
         public int author_id { get; set; }
+        public string author_name { get; set; }
 
-        public string name { get; set; }
-        public Nullable<System.DateTime> created_at { get; }
-        public Nullable<System.DateTime> updated_at { get; }
+        public List<Quote> quotes { get; set; }
+        
+        public Author()
+        {
+            quotes = new List<Quote>();
+        }
     }
 }

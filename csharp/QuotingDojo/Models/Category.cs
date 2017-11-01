@@ -8,9 +8,13 @@ namespace QuotingDojo.Models
     {
         [Key]
         public int category_id { get; set; }
+        public string category_name { get; set; }
+        
+        // public List<QuoteCategory> quote_categories { get; set; }
 
-        public string name { get; set; }
-        public Nullable<System.DateTime> created_at { get; }
-        public Nullable<System.DateTime> updated_at { get; }
+        public Category()
+        {
+            // quote_categories = new List<QuoteCategory>();
+        }
     }
 }

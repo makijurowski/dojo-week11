@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace QuotingDojo.Models
 {
-    public class QuoteViewModel
+    public class QuoteViewModel : BaseEntity
     {
         [Required]
         public int author_id { get; set; }
 
         [Required]
         [MinLength(10)]
-        public string quote { get; set; }
+        public string quote_text { get; set; }
 
-        // [Required]
-        // public string meta { get; set; }
+        [Required]
+        [MinLength(10)]
+        public string note_text { get; set; }
+
+        [Required]
+        public int category_id { get; set; }
+
     }
 }
