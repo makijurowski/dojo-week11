@@ -160,3 +160,8 @@ csharp/DojoLeague/wwwroot/*
 csharp/Demos/efcore/*
 csharp/RESTauranter/wwwroot/*
 csharp/RESTauranter/appsettings.json
+csharp/Restaurant/appsettings.json
+csharp/Restaurant/wwwroot/*
+csharp/Demos/asp_identity_core_ef/*
+*appsettings.json
+csharp/QuotingDojo/wwwroot/*

@@ -1,0 +1,58 @@
+<main>
+    <h1>Hi!</h1>
+    <h4>Add Author</h4>
+    <form action="/author/create" method="post">
+        <input type="text" name="author_name">
+        <input type="submit" value="Add Author">
+    </form> 
+
+    <h4>Add Quote</h4> 
+    <form action="/quote/create" method="post">
+        <select name="author_id">
+            @foreach (var author in ViewBag.authors)
+            {
+                <option value="@author.author_id">@author.author_name</option>
+            }
+        </select>
+        <textarea type="text" name="quote_text"></textarea>
+        <textarea type="text" name="note_text"></textarea>
+        <select name="category_id">
+            @foreach (var category in ViewBag.categories)
+            {
+                <option value="@category.category_id">@category.category_name</option>
+            }
+        </select>
+        <input type="submit" value="Add Quote">
+    </form>
+
+    <h4>Add Category</h4>
+    <form action="/category/create" method="post">
+        <input tupe="text" name="category_name">
+        <input type="submit" value="Add Category">
+    </form>
+
+    <h4>All Authors</h4>
+    <ul>
+        @foreach(var author in ViewBag.authors)
+        {
+            <li>@author.author_name</li>
+        }
+    </ul>
+
+    <h4>All Quotes</h4>
+    <ul>
+        @foreach(var quote in ViewBag.quotes)
+        {
+            <li>@quote.quote_text by Author No. @quote.author_id</li>
+        }
+    </ul>
+
+    <h4>All Categories</h4>
+    <ul>
+        @foreach(var category in ViewBag.categories)
+        {
+            <li>@category.category_name</li>
+        }
+    </ul>
+
+</main>
