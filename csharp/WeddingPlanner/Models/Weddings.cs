@@ -7,7 +7,9 @@ namespace WeddingPlanner.Models
     public partial class Weddings : BaseEntity
     {
         public Weddings() 
-        {}
+        { 
+            // wedding_guests = new List<Users>();
+        }
 
         [Key]
         public int WeddingId { get; set; }
@@ -19,5 +21,7 @@ namespace WeddingPlanner.Models
         public string BrideName { get; set; }
         public string GroomName { get; set; }
         public DateTime? Date { get; set; }
+
+        // public List<Users> wedding_guests { get; set; }
     }
 }

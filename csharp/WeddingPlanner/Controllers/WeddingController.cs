@@ -34,17 +34,17 @@ namespace WeddingPlanner.Controllers
 
         public IActionResult Index()
         {
-            if(ActiveUser == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            // if(ActiveUser == null)
+            // {
+            //     return RedirectToAction("Index", "Home");
+            // }
 
-            Dashboard dashData = new Dashboard
-            {
-                Weddings = _context.Weddings.Include(w => w.UserId).ToList(),
-                User = ActiveUser
-            };
-            return View(dashData);
+            // Dashboard dashData = new Dashboard
+            // {
+            //     User = ActiveUser,
+            //     Weddings = _context.Weddings.Include(w => w.UserId == ActiveUser.UserId).ToList()
+            // };
+            return View("Index");
         }
 
         public IActionResult Create()

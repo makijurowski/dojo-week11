@@ -61,7 +61,7 @@ namespace WeddingPlanner
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "weddings",
-                    template: "{controller=Weddings}/{action=Index}/{id?}");
+                    template: "{controller=Wedding}/{action=Index}/{id?}");
             });
         }
     }

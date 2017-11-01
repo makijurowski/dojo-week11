@@ -7,7 +7,9 @@ namespace WeddingPlanner.Models
     public partial class Users : BaseEntity
     {
         public Users()
-        {}
+        {
+            // user_weddings = new List<Weddings>();
+        }
 
         [Key]
         public int UserId { get; set; }
@@ -16,6 +18,6 @@ namespace WeddingPlanner.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Weddings> Weddings { get; set; }
+        // public List<Weddings> user_weddings { get; set; }
     }
 }
