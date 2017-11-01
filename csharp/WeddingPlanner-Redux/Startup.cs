@@ -36,9 +36,9 @@ namespace WeddingPlanner
             services.Configure<IdentityOptions>(options =>
             {
                 //password setting
-                options.Password.RequireDigit = true;
+                // options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 4;
-                options.Password.RequireNonAlphanumeric = true;
+                // options.Password.RequireNonAlphanumeric = true;
 
                 //lockout setting
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
