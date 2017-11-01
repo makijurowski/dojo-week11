@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WeddingPlanner.Models;
+using WeddingPlanner.Data;
 
 namespace WeddingPlanner.Controllers
 {
     public class HomeController : Controller
     {
-        private WeddingPlannerContext _context;
-        public HomeController(WeddingPlannerContext context)
+        private ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }

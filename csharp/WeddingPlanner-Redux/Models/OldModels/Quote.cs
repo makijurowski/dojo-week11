@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WeddingPlanner.Models
+namespace WeddingPlanner.Models.Old
 {
     public class Quote : BaseEntity
     {

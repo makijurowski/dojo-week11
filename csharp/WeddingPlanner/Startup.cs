@@ -32,8 +32,24 @@ namespace WeddingPlanner
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                //password setting
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 4;
+                //options.Password.RequireNonAlphanumeric = true;
+
+                //lockout setting
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = false;
+
+                //user setting
+                options.User.RequireUniqueEmail = true;
+            });
+            
             services.AddRouting(option => option.LowercaseUrls=true);
-            services.AddTransient<IEmailSender, EmailSender>();
             services.AddSession();
             services.AddMvc();
         }

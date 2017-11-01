@@ -1,6 +1,6 @@
 using System;
 
-namespace WeddingPlanner.Models
+namespace WeddingPlanner.Models.Old
 {
     public class Meta : BaseEntity
     {

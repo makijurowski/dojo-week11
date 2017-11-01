@@ -1,0 +1,45 @@
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData.AddActivePage(ManageNavPages.Index);
+}
+
+<h4>@ViewData["Title"]</h4>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+<div class="row center-align">
+    <div class="col s12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="input-field">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="validate" disabled />
+            </div>
+            <div class="input-field">
+                <label asp-for="Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="validate" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="validate" />
+                    <button asp-action="SendVerificationEmail" class="waves-effect waves-light btn">Send verification email</button>
+                }
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="input-field">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="validate" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

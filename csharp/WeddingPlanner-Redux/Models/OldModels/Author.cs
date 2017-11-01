@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WeddingPlanner.Models
+namespace WeddingPlanner.Models.Old
 {
     public class Author : BaseEntity
     {

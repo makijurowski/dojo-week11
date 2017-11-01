@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WeddingPlanner.Models
+namespace WeddingPlanner.Models.Old
 {
     public class AuthorViewModel : BaseEntity
     {

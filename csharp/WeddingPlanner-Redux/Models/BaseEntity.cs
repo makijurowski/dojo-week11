@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WeddingPlanner.Models
 {
-    public abstract class BaseEntity{}
+    public class BaseEntity
+    { }
 }
