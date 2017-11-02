@@ -1,24 +1,10 @@
-@{
-    ViewData["Title"] = "Dashboard";
-}
-@using WeddingPlanner.Models;
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Wedding</th>
-            <th>Date</th>
-            <th>Guests</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href="">wedding.bride_name & wedding.groom_name</td>
-            <td>Date Here</td>
-            <td>Count here</td>
-            <td>RSVP</td>
-        </tr>
-    </tbody>
-</table>
-<a href="/wedding/create"><button>Create a New Wedding</button></a>
+<main>
+    <h1>
+        Hi! :D
+    </h1>
+    <h2>Weddings</h2>
+    @foreach(var wedding in @ViewBag.weddings)
+    {
+        <p>@wedding.Date - @wedding.UserId</p>
+    }
+</main>

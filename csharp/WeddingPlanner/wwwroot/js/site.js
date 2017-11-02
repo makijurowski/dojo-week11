@@ -1,3 +1,1 @@
-﻿$(document).ready(function() {
-  $(".carousel").carousel();
-});
+﻿// Write your JavaScript code.

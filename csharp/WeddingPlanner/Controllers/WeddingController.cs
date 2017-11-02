@@ -1,123 +1,77 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using WeddingPlanner.Models;
-using WeddingPlanner.Models.ManageViewModels;
 using WeddingPlanner.Data;
-using WeddingPlanner.Services;
+using WeddingPlanner.Models;
+using WeddingPlanner.Models.ViewModels;
 
 namespace WeddingPlanner.Controllers
 {
     public class WeddingController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
-        private Users ActiveUser
+
+        public WeddingController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context, ILogger<AccountController> logger)
         {
-            get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
-        }
-        
-        public WeddingController(ApplicationDbContext context)
-        {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
+            _logger = logger;
         }
 
+        [HttpGet]
+        [Route("")]
         public IActionResult Index()
         {
-            // if(ActiveUser == null)
-            // {
-            //     return RedirectToAction("Index", "Home");
-            // }
-
-            // Dashboard dashData = new Dashboard
-            // {
-            //     User = ActiveUser,
-            //     Weddings = _context.Weddings.Include(w => w.UserId == ActiveUser.UserId).ToList()
-            // };
-            return View("Index");
+            ViewBag.users = _context.ApplicationUsers.ToList();
+            ViewBag.rsvps = _context.Rsvps.ToList();
+            ViewBag.weddings = _context.Weddings.ToList();
+            return View();
         }
 
-        public IActionResult Create()
+        [HttpGet]
+        [Route("wedding/add")]
+        public IActionResult WeddingForm()
         {
-            if(ActiveUser == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create (ViewWedding newWedding)
+        [Route("wedding/add")]
+        public async Task<IActionResult> AddWedding(WeddingViewModel incoming)
         {
-            if(ActiveUser == null)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
-            }
-            if(ModelState.IsValid)
-            {
-                Weddings wedding = new Weddings
+                var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
+                if (current_user != null)
                 {
-                    BrideName = newWedding.BrideName,
-                    GroomName = newWedding.GroomName,
-                    Date = newWedding.Date,
-                    Address = newWedding.Address,
-                    UserId = ActiveUser.UserId
-                };
-                _context.Weddings.Add(wedding);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                    Weddings NewWedding = new Weddings
+                    {
+                    UserId = current_user.UserId,
+                    GroomName = incoming.GroomName,
+                    BrideName = incoming.BrideName,
+                    Address = incoming.Address,
+                    Date = incoming.Date
+                    };
+                    await _context.Weddings.AddAsync(NewWedding);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-            return View(newWedding);
-        }
-
-        public IActionResult Rsvp(int id)
-        {
-            if (ActiveUser == null)
+            else
             {
-                return RedirectToAction("Index", "Home");
+                System.Console.WriteLine("All is not good in da hood. :(");
             }
-            Rsvps rsvp = new Rsvps
-            {
-                UserId = ActiveUser.UserId,
-                WeddingId = id
-            };
-            _context.Rsvps.Add(rsvp);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult UnRsvp(int id)
-        {
-            if (ActiveUser == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            Rsvps toDelete = _context.Rsvps.Where(r => r.WeddingId == id)
-                                           .Where(r => r.UserId == ActiveUser.UserId)
-                                           .SingleOrDefault();
-            _context.Rsvps.Remove(toDelete);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult Show(int id)
-        {
-            if(HttpContext.Session.GetInt32("id") == null)
-            {
-                return RedirectToAction("Index");
-            }
-            // return View(_context.Weddings.Include(w => w.Users).ThenInclude(g => g.UserId).Where(w => w.WeddingId == id).SingleOrDefault());
-            return View(_context.Weddings);
+            return View("WeddingForm", incoming);
         }
     }
 }

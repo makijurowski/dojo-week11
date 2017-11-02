@@ -7,13 +7,14 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="align-left"><i class="material-icons">person_outline</i></a></li>
-    <li><form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
-            <button type="submit" name="action" class="white btn-flat"><i class="material-icons">cancel</i></button>
-        </form>
-    </li>
+    @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "right" }))
+    {
+    @Html.AntiForgeryToken()
+    <li class="logout-link"><a href="javascript:document.getElementById('logoutForm').submit()"><i class="material-icons">cancel</i></a></li>
+    }
 }
 else
 {
-    <li><a asp-area="" asp-controller="Account" asp-action="Register"><i class="material-icons">person add</i></a></li>
+    <li><a asp-area="" asp-controller="Account" asp-action="Register"><i class="material-icons">person_add</i></a></li>
     <li><a asp-area="" asp-controller="Account" asp-action="Login"><i class="material-icons">beenhere</i></a></li>
 }

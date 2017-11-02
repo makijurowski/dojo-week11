@@ -5,5 +5,5 @@ using System.ComponentModel.DataAnnotations;
 namespace WeddingPlanner.Models
 {
     public class BaseEntity
-    {}
+    { }
 }
