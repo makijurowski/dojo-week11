@@ -3,40 +3,38 @@
 <h3 class="thin">Register</h3>
 <div class="divider"></div>
 <form class="col s12" asp-controller="Account" asp-action="Register" method="post" id="register">
-    <div asp-validation-summary="ModelOnly" class="text-danger" id="register-error"></div>
+    <!-- <div asp-validation-summary="ModelOnly"  id="register-error"></div> -->
+    <span asp-validation-for="Fname"></span>
     <div class="input-field">
         <input asp-for="Fname" class="validate" />
-        <label asp-for="Fname" class="active" ></label>
-        <span asp-validation-for="Fname" class="text-danger"></span>
+        <label asp-for="Fname" class="active"></label>
     </div>
+    <span asp-validation-for="Lname"></span>
     <div class="input-field">
         <input asp-for="Lname" class="validate" />
-        <label asp-for="Lname" class="active" ></label>
-        <span asp-validation-for="Lname" class="text-danger"></span>
+        <label asp-for="Lname" class="active"></label>
     </div>
+    <span asp-validation-for="REmail"></span>
     <div class="input-field">
         <input asp-for="REmail" class="validate" />
-        <label asp-for="REmail" class="active" ></label>
-        <span asp-validation-for="REmail" class="text-danger"></span>
+        <label asp-for="REmail" class="active"></label>
     </div>
+    <span asp-validation-for="RPassword"></span>
     <div class="input-field">
         <input asp-for="RPassword" class="validate" />
-        <label asp-for="RPassword" class="active" ></label>
-        <span asp-validation-for="RPassword" class="text-danger"></span>
+        <label asp-for="RPassword" class="active"></label>
     </div>
+    <span asp-validation-for="ConfirmPassword"></span>
     <div class="input-field">
         <input asp-for="ConfirmPassword" class="validate" />
-        <label asp-for="ConfirmPassword" class="active" ></label>
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <label asp-for="ConfirmPassword" class="active"></label>
     </div>
+    <span asp-validation-for="Birthdate"></span>
     <div class="input-field">
         <input asp-for="Birthdate" class="datepicker" />
         <label class="active" asp-for="Birthdate"></label>
-        <span asp-validation-for="Birthdate" class="text-danger"></span>
     </div>
-    <div class="input-field">
-        <button type="submit" class="btn waves-effect waves-light" name="register">Register</button>
-    </div>
+    <button type="submit" class="btn waves-effect waves-light" name="register">Register</button>
 </form>
 
 @section Scripts {

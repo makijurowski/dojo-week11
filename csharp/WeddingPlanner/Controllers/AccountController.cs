@@ -64,7 +64,6 @@ namespace WeddingPlanner.Controllers
                 var result = await _userManager.CreateAsync(user, incoming.RPassword);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
                     // // Put new user to Customer Table.
                     // Customer new_customer = new Customer
                     // {
@@ -106,13 +105,11 @@ namespace WeddingPlanner.Controllers
                 var result = await _signInManager.PasswordSignInAsync(incoming.LEmail, incoming.LPassword, incoming.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    Console.WriteLine("************* user logged in");
-                    Console.WriteLine("*************" + User.Identity.IsAuthenticated);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Login attempt failed.");
+                    ModelState.AddModelError("", "This email and password combination does not match an account.");
                 }
             }
             return View("Index");

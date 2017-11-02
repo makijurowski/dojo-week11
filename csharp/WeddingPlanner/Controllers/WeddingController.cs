@@ -32,9 +32,12 @@ namespace WeddingPlanner.Controllers
         [Route("")]
         public IActionResult Index()
         {
+            var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
+            ViewBag.current_user = current_user;
             ViewBag.users = _context.ApplicationUsers.ToList();
             ViewBag.rsvps = _context.Rsvps.ToList();
             ViewBag.weddings = _context.Weddings.ToList();
+            ViewBag.user_rsvps = _context.Rsvps.Where(guest => guest.UserId == current_user.UserId).Select(wedding => wedding.WeddingId).ToList();
             return View();
         }
 
@@ -56,11 +59,11 @@ namespace WeddingPlanner.Controllers
                 {
                     Weddings NewWedding = new Weddings
                     {
-                    UserId = current_user.UserId,
-                    GroomName = incoming.GroomName,
-                    BrideName = incoming.BrideName,
-                    Address = incoming.Address,
-                    Date = incoming.Date
+                        UserId = current_user.UserId,
+                        GroomName = incoming.GroomName,
+                        BrideName = incoming.BrideName,
+                        Address = incoming.Address,
+                        Date = incoming.Date
                     };
                     await _context.Weddings.AddAsync(NewWedding);
                     await _context.SaveChangesAsync();
@@ -69,9 +72,35 @@ namespace WeddingPlanner.Controllers
             }
             else
             {
-                System.Console.WriteLine("All is not good in da hood. :(");
+                System.Console.WriteLine("This failed.");
             }
             return View("WeddingForm", incoming);
+        }
+
+        [HttpPost]
+        [Route("rsvp/add")]
+        public async Task<IActionResult> AddRsvp(RsvpViewModel incoming)
+        {
+            if (ModelState.IsValid)
+            {
+                var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
+                if (current_user != null)
+                {
+                    Rsvps NewRsvp = new Rsvps
+                    {
+                        UserId = current_user.UserId,
+                        WeddingId = incoming.WeddingId
+                    };
+                    await _context.Rsvps.AddAsync(NewRsvp);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("This failed.");
+            }
+            return View("Index");
         }
     }
 }

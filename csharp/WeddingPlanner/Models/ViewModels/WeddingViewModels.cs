@@ -4,12 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WeddingPlanner.Models.ViewModels
 {
-    public class Dashboard
-    {
-        public List<Weddings> Weddings { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
-    }
-
     public class WeddingViewModel
     {
         [Required]
