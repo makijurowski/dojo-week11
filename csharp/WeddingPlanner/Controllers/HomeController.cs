@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WeddingPlanner.Models;
+using WeddingPlanner.Models.ViewModels;
 using WeddingPlanner.Data;
 
 namespace WeddingPlanner.Controllers
