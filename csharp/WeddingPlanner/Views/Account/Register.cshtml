@@ -10,22 +10,22 @@
             <div class="row">
                 <div class="col m6 s6 input-field">
                     <input asp-for="Fname" class="validate" />
-                    <label asp-for="Fname"></label>
+                    <label asp-for="Fname" class="active"></label>
                     <span asp-validation-for="Fname" class="text-danger"></span>
                 </div>
                 
                 <div class="col m6 s6 input-field">
                     <input asp-for="Lname" class="validate" />
-                    <label asp-for="Lname"></label>
+                    <label asp-for="Lname" class="active"></label>
                     <span asp-validation-for="Lname" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col m6 s6 input-field">
-                    <input asp-for="Email" class="validate" />
-                    <label asp-for="Email"></label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="REmail" class="validate" />
+                    <label asp-for="REmail" class="active"></label>
+                    <span asp-validation-for="REmail" class="text-danger"></span>
                 </div>
             </div>
 
@@ -39,14 +39,14 @@
 
             <div class="row">
                 <div class="col m6 s6 input-field">
-                    <input asp-for="Password" class="validate" />
-                    <label asp-for="Password"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input asp-for="RPassword" class="validate" />
+                    <label asp-for="RPassword" class="active"></label>
+                    <span asp-validation-for="RPassword" class="text-danger"></span>
                 </div>
             
                 <div class="col m6 s6 input-field">
                     <input asp-for="ConfirmPassword" class="validate" />
-                    <label asp-for="ConfirmPassword"></label>
+                    <label asp-for="ConfirmPassword" class="active"></label>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
@@ -63,5 +63,5 @@
 </div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @await Html.PartialAsync("Partials/_ValidationScriptsPartial")
 }

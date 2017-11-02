@@ -1,0 +1,29 @@
+@model WeddingPlanner.Models.ViewModels.LoginViewModel
+
+<h3 class="thin">Login</h3>
+<div class="divider"></div>
+<form class="col s12" asp-controller="Account" asp-action="Login" method="post" id="login">
+    <div asp-validation-summary="ModelOnly" class="text-danger" id="login-error"></div>
+    <div class="input-field">
+        <label class="active" asp-for="LEmail"></label>
+        <input asp-for="LEmail" class="validate" />
+        <span asp-validation-for="LEmail" class="text-danger"></span>
+    </div>
+    <div class="input-field">
+        <label class="active" asp-for="LPassword"></label>
+        <input asp-for="LPassword" class="validate" />
+        <span asp-validation-for="LPassword" class="text-danger"></span>
+    </div>
+    <div class="input-field">
+        <p>
+            <input type="checkbox" asp-for="RememberMe" id="RememberMe" />
+            <label class="active" asp-for="RememberMe" for="RememberMe">@Html.DisplayNameFor(m => m.RememberMe)</label>
+        </p>
+    </div>
+    <div class="input-field">
+        <button type="submit" class="btn waves-effect waves-light" action="login">Log in</button>
+    </div>
+    <p>
+        <a asp-action="Register" asp-controller="Account">Register as a new user?</a>
+    </p>
+</form>

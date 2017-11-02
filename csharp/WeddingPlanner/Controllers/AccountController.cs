@@ -30,43 +30,49 @@ namespace WeddingPlanner.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("account")]
+        public IActionResult Index()
+        {
+            return View("Index");
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("account/register")]
         public IActionResult Register()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Route("account/register")]
-        public async Task<IActionResult> Register(RegisterViewModel vm)
+        public async Task<IActionResult> Register(RegisterViewModel incoming)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
-                    Fname = vm.Fname,
-                    Lname = vm.Lname,
-                    Email = vm.Email,
-                    UserName = vm.Email,
-                    Birthdate = vm.Birthdate,
+                    Fname = incoming.Fname,
+                    Lname = incoming.Lname,
+                    Email = incoming.REmail,
+                    UserName = incoming.REmail,
+                    Birthdate = incoming.Birthdate,
                 };
-
-                var result = await _userManager.CreateAsync(user, vm.Password);
+                var result = await _userManager.CreateAsync(user, incoming.RPassword);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     // // Put new user to Customer Table.
                     // Customer new_customer = new Customer
                     // {
-                    //     ApplicationUserEmail = vm.Email,
+                    //     ApplicationUserEmail = incoming.Email,
                     //     Created = DateTime.Now,
                     // };
                     // _context.Customers.Add(new_customer);
                     // _context.SaveChanges();
-
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -78,7 +84,7 @@ namespace WeddingPlanner.Controllers
                     }
                 }
             }
-            return View(vm);
+            return View("Index");
         }
 
         [HttpGet]
@@ -86,18 +92,18 @@ namespace WeddingPlanner.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpPost]
         [Route("account/Login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel vm, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel incoming)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(incoming.LEmail, incoming.LPassword, incoming.RememberMe, false);
                 if (result.Succeeded)
                 {
                     Console.WriteLine("************* user logged in");
@@ -109,7 +115,7 @@ namespace WeddingPlanner.Controllers
                     ModelState.AddModelError("", "Login attempt failed.");
                 }
             }
-            return View(vm);
+            return View("Index");
         }
 
         [HttpPost]

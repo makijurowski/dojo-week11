@@ -7,11 +7,11 @@ namespace WeddingPlanner.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required, DataType(DataType.Password), MinLength(4), MaxLength(50)]
-        public string Password { get; set; }
+        [Required, EmailAddress, Display(Name = "Email")]
+        public string LEmail { get; set; }
 
-        [Required, EmailAddress]
-        public string Email { get; set; }
+        [Required, DataType(DataType.Password), MinLength(4), MaxLength(50), Display(Name = "Password")]
+        public string LPassword { get; set; }
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }

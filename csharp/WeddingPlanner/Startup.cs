@@ -24,32 +24,27 @@ namespace WeddingPlanner
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // MySQL setup
             services.Configure<MySqlOptions>(Configuration.GetSection("DBInfo"));
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
-
+            // Identity setup
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
             services.Configure<IdentityOptions>(options =>
             {
-                //password setting
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
-
-                //user setting
                 options.User.RequireUniqueEmail = true;
             });
-
+            // Cookie authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie();
-
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -61,7 +56,7 @@ namespace WeddingPlanner
                 options.SlidingExpiration = true;
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
-
+            // Add app services
             services.AddRouting(option => option.LowercaseUrls=true);
             services.AddSession();
             services.AddMvc();
@@ -76,8 +71,6 @@ namespace WeddingPlanner
             Configuration = builder.Build();
         }
 
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
