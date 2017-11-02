@@ -10,7 +10,7 @@ namespace WeddingPlanner.Models.ViewModels
         public ApplicationUser ApplicationUser { get; set; }
     }
 
-    public class ViewWedding
+    public class WeddingViewModel
     {
         [Required]
         public string BrideName { get; set; }

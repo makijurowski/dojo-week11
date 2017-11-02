@@ -1,0 +1,39 @@
+@model WeddingViewModel
+@{
+    ViewData["Title"] = "- Add a New Wedding";
+}
+
+<h4>Add a Wedding</h4>
+<div class="row">
+    <form class="col s6" asp-controller="Wedding" asp-action="AddWedding" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="col m6 s6 input-field">
+                <input asp-for="GroomName" class="validate" />
+                <label asp-for="GroomName"></label>
+                <span asp-validation-for="GroomName" class="text-danger"></span>
+            </div>
+            
+            <div class="col m6 s6 input-field">
+                <input asp-for="BrideName" class="validate" />
+                <label asp-for="BrideName"></label>
+                <span asp-validation-for="BrideName" class="text-danger"></span>
+            </div>
+
+            <div class="col m6 s6 input-field">
+                <input asp-for="Address" class="validate" />
+                <label asp-for="Address"></label>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="col m6 s6 input-field">
+                <input asp-for="Date" class="datepicker" />
+                <label class="active" asp-for="Date"></label>
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn waves-effect waves-light">Add Wedding</button>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

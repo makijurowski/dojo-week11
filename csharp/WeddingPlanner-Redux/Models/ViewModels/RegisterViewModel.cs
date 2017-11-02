@@ -14,9 +14,6 @@ namespace WeddingPlanner.Models.ViewModels
         [Required, EmailAddress, MaxLength(256)]
         public string Email { get; set; }
 
-        // [Required, MaxLength(256), Display(Name = "Username")]
-        // public string UserName { get; set; }
-
         [Required, Compare("ConfirmPassword", ErrorMessage = "Password must match!"), DataType(DataType.Password), MinLength(4), MaxLength(50)]
         public string Password { get; set; }
 

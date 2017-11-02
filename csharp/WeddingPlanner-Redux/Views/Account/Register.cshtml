@@ -1,11 +1,9 @@
 @model RegisterViewModel
+
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "- Register";
 }
 
-<h4>@ViewData["Title"]</h4>
-
-<h2>Registration Page</h2>
 <div class="row">
     <form class="col s6" asp-controller="Account" asp-action="Register" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>

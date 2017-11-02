@@ -12,6 +12,7 @@ namespace WeddingPlanner.Controllers
     public class HomeController : Controller
     {
         private ApplicationDbContext _context;
+        
         public HomeController(ApplicationDbContext context)
         {
             _context = context;

@@ -1,22 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WeddingPlanner.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WeddingPlanner.Data;
+using WeddingPlanner.Models;
+using WeddingPlanner.Models.ViewModels;
 
 namespace WeddingPlanner.Controllers
 {
     public class WeddingController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
-        public WeddingController(ApplicationDbContext context)
+        public WeddingController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context, ILogger<AccountController> logger)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -27,65 +36,42 @@ namespace WeddingPlanner.Controllers
             ViewBag.rsvps = _context.Rsvps.ToList();
             ViewBag.weddings = _context.Weddings.ToList();
             return View();
-
         }
 
-        // [HttpPost]
-        // [Route("user/create")]
-        // public IActionResult AddUser(UserViewModel incoming)
-        // {
-        //     if(ModelState.IsValid)
-        //     {
-        //         System.Console.WriteLine("All good in da hood!");
-        //         ApplicationUser NewUser = new ApplicationUser{
-        //             name = incoming.name,
-        //         };
-        //         _context.users.Add(NewUser);
-        //         _context.SaveChanges();
-        //     }
-        //     else
-        //     {
-        //         System.Console.WriteLine("All is not good in da hood. :(");
-        //     }
-        //     return RedirectToAction("Index");
-        // }
-        // [HttpPost]
-        // [Route("wedding/create")]
-        // public IActionResult AddQuote(QuoteViewModel incoming)
-        // {
-        //     if(ModelState.IsValid)
-        //     {
-        //         //meta
-        //         Meta newMeta = new Meta();
-        //         newMeta.notes = incoming.meta;
-        //         _context.metas.Add(newMeta);
-        //         _context.SaveChanges();
-        //         //reassign to db instance of meta
-        //         newMeta = _context.metas.Last();
-        //         //quote
-        //         Quote newQuote = new Quote();
-        //         ApplicationUser auth = _context.users.SingleOrDefault(ApplicationUser=>ApplicationUser.userid == incoming.userid);
-        //         newQuote.user = auth;
-        //         newQuote.quote = incoming.quote;
-        //         newQuote.meta = newMeta;
-        //         _context.weddings.Add(newQuote);
-        //         _context.SaveChanges();
-        //         // reassign newQuote to db instance
-        //         newQuote = _context.weddings.Last();
-        //         //quotersvps
-        //         QuoteCategory newQcat = new QuoteCategory();
-        //         Category cat = _context.rsvps.SingleOrDefault(Category=>Category.categoryid == incoming.categoryid);
-        //         newQcat.category = cat;
-        //         newQcat.quote = newQuote;
-        //         _context.quotersvps.Add(newQcat);
-        //         _context.SaveChanges();                
-        //         System.Console.WriteLine("Goodness!");
-        //     }
-        //     else
-        //     {
-        //         System.Console.WriteLine("Badness. :(");
-        //     }
-        //     return RedirectToAction("Index");
-        // }
+        [HttpGet]
+        [Route("wedding/add")]
+        public IActionResult WeddingForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("wedding/add")]
+        public async Task<IActionResult> AddWedding(WeddingViewModel incoming)
+        {
+            if (ModelState.IsValid)
+            {
+                var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
+                if (current_user != null)
+                {
+                    Weddings NewWedding = new Weddings
+                    {
+                    UserId = current_user.UserId,
+                    GroomName = incoming.GroomName,
+                    BrideName = incoming.BrideName,
+                    Address = incoming.Address,
+                    Date = incoming.Date
+                    };
+                    await _context.Weddings.AddAsync(NewWedding);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("All is not good in da hood. :(");
+            }
+            return View("WeddingForm", incoming);
+        }
     }
 }
