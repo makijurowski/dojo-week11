@@ -2,26 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WeddingPlanner.Models
+namespace WeddingPlanner
 {
-    public partial class Weddings : BaseEntity
+    public partial class Weddings
     {
-        public Weddings() 
-        { 
-            // wedding_guests = new List<Users>();
+        public Weddings()
+        {
+            Rsvps = new HashSet<Rsvps>();
         }
 
         [Key]
         public int WeddingId { get; set; }
 
         public int UserId { get; set; }
-        public Users User { get; set; }
-
+        
         public string Address { get; set; }
         public string BrideName { get; set; }
-        public string GroomName { get; set; }
         public DateTime? Date { get; set; }
+        public string GroomName { get; set; }
 
-        // public List<Users> wedding_guests { get; set; }
+        public ICollection<Rsvps> Rsvps { get; set; }
     }
 }

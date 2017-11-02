@@ -4,44 +4,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using WeddingPlanner.Models;
-using WeddingPlanner.Services;
+using WeddingPlanner.Data;
 
 namespace WeddingPlanner.Controllers
 {
     public class HomeController : Controller
     {
         private ApplicationDbContext _context;
-
-        private Users ActiveUser
-        {
-            get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
-        }
-        private Users ActiveUserDetailed
-        {
-            get{ return _context.Users.Where(u => u.UserId.ToString() == HttpContext.Session.GetString("id")).FirstOrDefault(); }
-        }
-
+        
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }
-
         public IActionResult Index()
         {
-            var Users = _context.Users.ToList();
             return View();
-        }
-
-        public IActionResult Show(int id)
-        {
-            if(HttpContext.Session.GetString("id") == null || HttpContext.Session.GetInt32("id") != id)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(this.ActiveUser);
         }
 
         public IActionResult About()
