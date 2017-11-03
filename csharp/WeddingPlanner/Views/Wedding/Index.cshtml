@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var wedding in @ViewBag.weddings)
+                    @foreach(var wedding in @ViewBag.all_weddings)
                     {
                         <tr>
                             <td><a href="/wedding/@wedding.WeddingId">@wedding.BrideName & @wedding.GroomName</a></td>
@@ -30,20 +30,20 @@
                             <td>
                                 @if (@ViewBag.current_user.UserId == @wedding.UserId)
                                 {
-                                    <form asp-controller="Wedding" asp-action="DeleteWedding" method="post" id="deletewedding">
+                                    <form asp-controller="Wedding" asp-action="DeleteWedding" method="post" id="delete-wedding">
                                         <input asp-for="WeddingId" value="@wedding.WeddingId" />
-                                        <button type="submit" class="btn waves-effect waves-light" name="rsvp">Delete</button>                            
+                                        <button type="submit" class="btn waves-effect waves-light" name="delete-wedding">Delete</button>                            
                                     </form>
                                 } else if (@ViewBag.user_rsvps.Contains(@wedding.WeddingId) == true)
                                 {
-                                    <form asp-controller="Wedding" asp-action="DeleteRsvp" method="post" id="deletersvp">
+                                    <form asp-controller="Wedding" asp-action="DeleteRsvp" method="post" id="delete-rsvp">
                                         <input asp-for="WeddingId" value="@wedding.WeddingId" />
-                                        <button type="submit" class="btn waves-effect waves-light" name="deletersvp">Un-RSVP</button>                            
+                                        <button type="submit" class="btn waves-effect waves-light" name="delete-rsvp">Un-RSVP</button>                            
                                     </form>
                                 } else {
-                                    <form asp-controller="Wedding" asp-action="AddRsvp" method="post" id="rsvp">
+                                    <form asp-controller="Wedding" asp-action="AddRsvp" method="post" id="add-rsvp">
                                         <input asp-for="WeddingId" value="@wedding.WeddingId" />
-                                        <button type="submit" class="btn waves-effect waves-light" name="rsvp">RSVP</button>                            
+                                        <button type="submit" class="btn waves-effect waves-light" name="add-rsvp">RSVP</button>                            
                                     </form>
                                 }
                             </td>
@@ -59,7 +59,9 @@
     }
     @if(@ViewBag.current_user == null)
     {
-        <p>Go register or login first!</p>
+        <div class="section">
+            <h6>Go register or login first!</h6>
+        </div>
     }
     <div class="col s1"></div>
 </div>

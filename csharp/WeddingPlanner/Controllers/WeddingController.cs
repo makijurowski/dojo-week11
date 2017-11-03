@@ -20,8 +20,10 @@ namespace WeddingPlanner.Controllers
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
 
-        public WeddingController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-            ApplicationDbContext context, ILogger<AccountController> logger)
+        public WeddingController(UserManager<ApplicationUser> userManager, 
+                                 SignInManager<ApplicationUser> signInManager,
+                                 ApplicationDbContext context, 
+                                 ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,20 +36,19 @@ namespace WeddingPlanner.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            // var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
-            var current_user =  _context.ApplicationUsers.SingleOrDefault(u => u.UserName == User.Identity.Name);
+            var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
+            // var current_user = _context.ApplicationUsers.SingleOrDefault(user => user.UserName == User.Identity.Name);
             ViewBag.current_user = current_user;
-            ViewBag.users = _context.ApplicationUsers.ToList();
-            ViewBag.rsvps = _context.Rsvps.ToList();
-            ViewBag.weddings = _context.Weddings.ToList();
+            ViewBag.all_users = _context.ApplicationUsers.ToList();
+            ViewBag.all_rsvps = _context.Rsvps.ToList();
+            ViewBag.all_weddings = _context.Weddings.ToList();
             if (current_user != null)
             {
-                ViewBag.user_rsvps = _context.Rsvps.Where(guest => guest.UserId == current_user.UserId).Select(wedding => wedding.WeddingId).ToList();   
+                ViewBag.user_rsvps = _context.Rsvps.Where(guest => guest.UserId == current_user.UserId).Select(wedding => wedding.WeddingId).ToList();
             }
             return View("Index");
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("wedding/{WeddingId}")]
         public IActionResult WeddingDetails(int WeddingId)
@@ -55,24 +56,15 @@ namespace WeddingPlanner.Controllers
             var current_wedding = _context.Weddings.Where(wedding => wedding.WeddingId == WeddingId).FirstOrDefault();
             if (current_wedding != null)
             {
-                var wedding_rsvps = _context.Rsvps.Where(rsvp => rsvp.WeddingId == current_wedding.WeddingId).ToList();
                 ViewBag.current_wedding = current_wedding;
-                ViewBag.users = _context.ApplicationUsers.ToList();
-                ViewBag.these_rsvps = _context.rsvp_users.ToList();
-                ViewBag.weddings = _context.Weddings.ToList();
-                // ViewBag.wedding_rsvps = _context.Rsvps.Where(rsvp => rsvp.WeddingId == current_wedding.WeddingId).ToList();
-                // ViewBag.guest_list = _context.Users.ToList().GroupJoin(wedding_rsvps, user => user.UserId, rsvps => rsvps.UserId, 
-                //                                              (user, rsvp) => new 
-                //                                              {
-                //                                                  Fname = user.Fname,
-                //                                                  Lname = user.Lname
-                //                                              }).ToList();
+                ViewBag.current_wedding_rsvps = _context.rsvp_users.ToList();
+                ViewBag.all_users = _context.ApplicationUsers.ToList();
+                ViewBag.all_weddings = _context.Weddings.ToList();
                 return View("Details");
             }
             return View("Index");
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("wedding/add")]
         public IActionResult WeddingForm()
@@ -118,8 +110,8 @@ namespace WeddingPlanner.Controllers
                 var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
                 if (current_user != null)
                 {
-                    var entry = _context.Weddings.Where(creator => creator.UserId == current_user.UserId).Where(wedding => wedding.WeddingId == incoming.WeddingId).FirstOrDefault();
-                    _context.Weddings.Remove(entry);
+                    var current_wedding = _context.Weddings.Where(creator => creator.UserId == current_user.UserId).Where(wedding => wedding.WeddingId == incoming.WeddingId).FirstOrDefault();
+                    _context.Weddings.Remove(current_wedding);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -127,8 +119,7 @@ namespace WeddingPlanner.Controllers
             else
             {
                 System.Console.WriteLine("This failed.");
-                System.Console.WriteLine("Press any key to continue");
-                System.Console.ReadLine();
+                return View("Index", incoming);
             }
             return View("Index");
         }
@@ -155,6 +146,7 @@ namespace WeddingPlanner.Controllers
             else
             {
                 System.Console.WriteLine("This failed.");
+                return View("Index", incoming);
             }
             return View("Index");
         }
@@ -168,8 +160,8 @@ namespace WeddingPlanner.Controllers
                 var current_user = _userManager.GetUserAsync(HttpContext.User).Result;
                 if (current_user != null)
                 {
-                    var entry = _context.Rsvps.Where(guest => guest.UserId == current_user.UserId).Where(wedding => wedding.WeddingId == incoming.WeddingId).FirstOrDefault();
-                    _context.Rsvps.Remove(entry);
+                    var current_rsvp = _context.Rsvps.Where(guest => guest.UserId == current_user.UserId).Where(wedding => wedding.WeddingId == incoming.WeddingId).FirstOrDefault();
+                    _context.Rsvps.Remove(current_rsvp);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -177,6 +169,7 @@ namespace WeddingPlanner.Controllers
             else
             {
                 System.Console.WriteLine("This failed.");
+                return View("Index", incoming);
             }
             return View("Index");
         }

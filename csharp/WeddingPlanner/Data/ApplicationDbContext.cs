@@ -15,10 +15,8 @@ namespace WeddingPlanner.Data
         public virtual DbSet<Weddings> Weddings { get; set; }
         public virtual DbSet<rsvp_users> rsvp_users { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

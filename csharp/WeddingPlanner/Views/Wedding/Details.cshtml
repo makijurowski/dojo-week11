@@ -28,11 +28,11 @@
                     @ViewBag.current_wedding.Rsvps.Count
                 </td>
                 <td>
-                    @foreach(var response in @ViewBag.these_rsvps)
+                    @foreach(var response in @ViewBag.current_wedding_rsvps)
                     {
                         @if (response.WeddingId == @ViewBag.current_wedding.WeddingId)
                         {
-                            <span style="fname">@response.Fname</span> <span style="lname">@response.Lname</span>
+                            <span style="first-name">@response.Fname</span> <span style="last-name">@response.Lname</span>
                         }
                     }
                 </td>
