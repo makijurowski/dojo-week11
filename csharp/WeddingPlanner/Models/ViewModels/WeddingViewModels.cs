@@ -6,17 +6,17 @@ namespace WeddingPlanner.Models.ViewModels
 {
     public class WeddingViewModel
     {
-        [Required]
+        [Required, Display(Name = "Name of Bride")]
         public string BrideName { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Name of Groom")]
         public string GroomName { get; set; }
 
-        [FutureDate]
+        [FutureDate, Display(Name = "Wedding Date")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Wedding Location (Full Address)")]
         public string Address { get; set; }
     }
 

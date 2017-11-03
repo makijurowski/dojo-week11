@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "- Wedding Details";
+}
+
+<h4>The Wedding of @ViewBag.current_wedding.BrideName & @ViewBag.current_wedding.GroomName</h4>
+<div class="divider"></div>
+<div class="section">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <h6>Date</h6>
+                </th>
+                <th>
+                    <h6>Total Guests</h6>
+                </th>
+                <th>
+                    <h6>Guest List</h6>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.current_wedding.Date.ToString("MMMM dd, yyyy")
+                </td>
+                <td>
+                    @ViewBag.current_wedding.Rsvps.Count
+                </td>
+                <td>
+                    @foreach(var response in @ViewBag.these_rsvps)
+                    {
+                        @if (response.WeddingId == @ViewBag.current_wedding.WeddingId)
+                        {
+                            <span style="fname">@response.Fname</span> <span style="lname">@response.Lname</span>
+                        }
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

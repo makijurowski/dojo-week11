@@ -13,6 +13,7 @@ namespace WeddingPlanner.Data
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Rsvps> Rsvps { get; set; }
         public virtual DbSet<Weddings> Weddings { get; set; }
+        public virtual DbSet<rsvp_users> rsvp_users { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -22,7 +23,6 @@ namespace WeddingPlanner.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // modelBuilder.Entity<Users>().ToTable("AspNetUsers");
         }
     }
 }

@@ -24,39 +24,37 @@
                     @foreach(var wedding in @ViewBag.weddings)
                     {
                         <tr>
-                            <td><a href="">@wedding.BrideName & @wedding.GroomName</a></td>
+                            <td><a href="/wedding/@wedding.WeddingId">@wedding.BrideName & @wedding.GroomName</a></td>
                             <td>@wedding.Date.ToString("MMMM dd, yyyy")</td>
                             <td>@wedding.Rsvps.Count</td>
                             <td>
-                                @if(@ViewBag.user_rsvps.Contains(@wedding.WeddingId) != true)
+                                @if (@ViewBag.current_user.UserId == @wedding.UserId)
                                 {
+                                    <form asp-controller="Wedding" asp-action="DeleteWedding" method="post" id="deletewedding">
+                                        <input asp-for="WeddingId" value="@wedding.WeddingId" />
+                                        <button type="submit" class="btn waves-effect waves-light" name="rsvp">Delete</button>                            
+                                    </form>
+                                } else if (@ViewBag.user_rsvps.Contains(@wedding.WeddingId) == true)
+                                {
+                                    <form asp-controller="Wedding" asp-action="DeleteRsvp" method="post" id="deletersvp">
+                                        <input asp-for="WeddingId" value="@wedding.WeddingId" />
+                                        <button type="submit" class="btn waves-effect waves-light" name="deletersvp">Un-RSVP</button>                            
+                                    </form>
+                                } else {
                                     <form asp-controller="Wedding" asp-action="AddRsvp" method="post" id="rsvp">
                                         <input asp-for="WeddingId" value="@wedding.WeddingId" />
                                         <button type="submit" class="btn waves-effect waves-light" name="rsvp">RSVP</button>                            
                                     </form>
                                 }
-                                @if(@ViewBag.user_rsvps.Contains(@wedding.WeddingId) == true)
-                                {
-                                    <form asp-controller="Wedding" asp-action="RemoveRsvp" method="post" id="removersvp">
-                                        <input asp-for="WeddingId" value="@wedding.WeddingId" />
-                                        <button type="submit" class="btn waves-effect waves-light" name="removersvp">Remove RSVP</button>                            
-                                    </form>
-                                }
                             </td>
                         </tr>
                     }
-                    <!-- <tr>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                        <td>$3.76</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan</td>
-                        <td>Lollipop</td>
-                        <td>$7.00</td>
-                    </tr> -->
                 </tbody>
             </table>
+        </div>
+        <div class="section right-align">
+            <div class="divider"></div>
+            <a asp-area="" asp-controller="Wedding" asp-action="AddWedding" title="AddWedding" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add a Wedding </a>
         </div>
     }
     @if(@ViewBag.current_user == null)
