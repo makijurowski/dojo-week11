@@ -1,15 +1,16 @@
-@model IndexViewModel
+@model WeddingPlanner.Models.ManageViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Profile";
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<h4>@ViewData["Title"]</h4>
 @Html.Partial("_StatusMessage", Model.StatusMessage)
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<h4>@ViewData["Title"]</h4>
 <div class="row center-align">
     <div class="col s12">
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="input-field">
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="validate" disabled />
@@ -26,7 +27,7 @@
                 else
                 {
                     <input asp-for="Email" class="validate" />
-                    <button asp-action="SendVerificationEmail" class="waves-effect waves-light btn">Send verification email</button>
+                    <button asp-action="SendVerificationEmail" class="waves-effect waves-light btn">Update Email</button>
                 }
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>

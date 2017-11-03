@@ -81,7 +81,7 @@ namespace WeddingPlanner
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
             }
             loggerFactory.AddConsole();
             app.UseStaticFiles();

@@ -19,8 +19,10 @@ namespace WeddingPlanner.Controllers
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                 ApplicationDbContext context, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, 
+                                 SignInManager<ApplicationUser> signInManager,
+                                 ApplicationDbContext context, 
+                                 ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
