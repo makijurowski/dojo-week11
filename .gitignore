@@ -166,3 +166,11 @@ csharp/Demos/asp_identity_core_ef/*
 *appsettings.json
 csharp/QuotingDojo/wwwroot/*
 csharp/WeddingPlanner-Redux/wwwroot/*
+csharp/IdeaExchange/wwwroot/css/fonts/roboto/Roboto-ThinItalic.ttf
+*fonts*
+csharp/IdeaExchange/wwwroot/js/materialize.js
+csharp/IdeaExchange/wwwroot/css/materialize.css
+csharp/IdeaExchange/wwwroot/lib/jquery/dist/jquery.js
+csharp/IdeaExchange/wwwroot/lib/jquery-validation/dist/jquery.validate.js
+csharp/IdeaExchange/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js
+csharp/IdeaExchange/wwwroot/lib/jquery-validation/dist/additional-methods.js

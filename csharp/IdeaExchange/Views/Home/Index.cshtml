@@ -1,0 +1,87 @@
+﻿@using System.Linq;
+@model IdeaExchange.Models.ViewModels.LikesViewModel;
+
+
+@if(@ViewBag.current_user != null)
+{
+    <div class="container" style="padding-top:20px;">
+        <h3 class="thin">Hi @ViewBag.current_user.Fname!</h3>
+        <div class="center-align section" id="post-form">@await Html.PartialAsync("Partials/_PostFormPartial")</div>
+    </div>
+    <div class="section col s12">
+        <table class="col s12" style="margin-top:20px">
+            @foreach(var post in @ViewBag.all_posts)
+            {
+                <tr>
+                    <td class="right-align" style="vertical-align:top;padding-right:10px;width:20%;">
+                        <div class="chip black" style="margin-top:15px;text-transform:uppercase;border-radius:3px;overflow:hidden;">
+                            <a class="white-text" href="/users/@post.UserId">@post.Alias says</a>
+                        </div>
+                    </td>
+                    <td style="vertical-align:top">
+                        @if (@ViewBag.top_post.PostId == @post.PostId)
+                        {
+                            <div class="card-panel hoverable flow-text second" onclick="location.href='/bright_ideas/@post.PostId'" style="border-radius:10px;">
+                                @post.PostContent
+                            </div>
+                        } else 
+                        {
+                            <div class="card-panel hoverable flow-text" onclick="location.href='/bright_ideas/@post.PostId'" style="border-radius:10px;">
+                                @post.PostContent
+                            </div>
+                        }
+                        <div class="row">
+                            @if (@ViewBag.user_likes.Contains(@post.PostId) == true)
+                            {
+                                <form asp-controller="Home" asp-action="DeleteLike" method="post" id="delete-like">
+                                    <input asp-for="PostId" value="@post.PostId" />
+                                    <button type="submit" class="btn-flat waves-effect waves-light left" name="delete-like">
+                                        <div class="valign-wrapper">
+                                            <i class="tiny material-icons red-text">favorite</i>
+                                            <span class="right-3">Un-Like</span>
+                                        </div>                           
+                                    </button>
+                                </form>
+                            } else {
+                                <form asp-controller="Home" asp-action="AddLike" method="post" id="add-like">
+                                    <input asp-for="PostId" value="@post.PostId" />
+                                    <button type="submit" class="btn-flat waves-effect waves-light left" name="add-like">
+                                        <div class="valign-wrapper">
+                                            <i class="tiny material-icons">favorite_border</i>
+                                            <span class="right-3">Like</span>
+                                        </div>
+                                    </button>                            
+                                </form>
+                            }
+                            @if (@post.Likes.Count == 1)
+                            {
+                                <a class="btn-flat waves-effect waves-light right" href="/bright_ideas/@post.PostId">
+                                    <h6>@post.Likes.Count person likes this</h6>
+                                </a>
+                            } else {
+                                <a class="btn-flat waves-effect waves-light right" href="/bright_ideas/@post.PostId">
+                                    <h6>@post.Likes.Count people like this</h6>
+                                </a>
+                            }
+                        </div>
+                    </td>
+                    <td class="left-align" style="vertical-align:top;width:7%">
+                        @if (@ViewBag.current_user.UserId == @post.UserId)
+                        {
+                            <form asp-controller="Home" asp-action="DeletePost" method="post" id="delete-post">
+                                <input asp-for="PostId" value="@post.PostId" />
+                                <a href="javascript:{}" onclick="document.getElementById('delete-post').submit(); return false;"><i class="small material-icons" style="margin-top:10px;">clear</i></a>                         
+                            </form>
+                        } 
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+@if(@ViewBag.current_user == null)
+{
+    <div class="section">
+        <h6>Go register or login first!</h6>
+    </div>
+}

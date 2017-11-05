@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "- User Details";
+    var user = ViewBag.this_user;
+}
+
+<div class="container">
+    <div class="section row">
+        <table class="col s6">
+            <tr>
+                <td>
+                    <h5 class="thin">Name:</h5>
+                </td>
+                <td>
+                    @user.Fname
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h5 class="thin">Alias:</h5>
+                </td>
+                <td>
+                    @user.Alias
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h5 class="thin">Email:</h5>
+                </td>
+                <td>
+                    @user.Email
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="divider"></div>
+    <div class="section row">
+        <table class="col s6">
+            <tr>
+                <td>
+                    <h5 class="thin">Total Number of Posts:</h5>
+                </td>
+                <td>
+                    @ViewBag.user_post_count
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h5 class="thin">Total Number of Likes:</h5>
+                </td>
+                <td>
+                    @ViewBag.user_like_count
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="section">
+        <a href="##" onClick="history.go(-1); return false;" class="waves-effect waves-light black btn"><i class="material-icons left" style="overflow:hidden;">arrow_back</i>Back</a>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@using Microsoft.AspNetCore.Identity
+@using IdeaExchange.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "right" }))
+    {
+        @Html.AntiForgeryToken()
+        <li class="logout-link"><a href="javascript:document.getElementById('logoutForm').submit()"><i class="material-icons black-text">cancel</i></a></li>
+    }
+}
+else
+{
+    <li><a asp-area="" asp-controller="Account" asp-action="Register"><i class="material-icons medium black-text">person_add</i></a></li>
+}

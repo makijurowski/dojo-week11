@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "- Registration & Login";
+}
+
+<div class="container" style="padding-top:20px;">
+    <h4 class="bold italic">You must be registered with an account to view this website.</h4>
+    <div class="divider" style="margin-top:30px;margin-bottom:30px;"></div>
+    <h5 class="red-text"><div asp-validation-summary="ModelOnly"></div></h5>
+    <div class="col s12 m6 l6 center-align" id="register-form">@await Html.PartialAsync("Partials/_RegistrationFormPartial")</div>
+    <div class="col s12 m6 l6 center-align" id="login-form">@await Html.PartialAsync("Partials/_LoginFormPartial")</div>
+</div>

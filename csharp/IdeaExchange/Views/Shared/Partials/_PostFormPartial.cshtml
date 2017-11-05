@@ -1,0 +1,20 @@
+@model PostViewModel
+@{
+    ViewData["Title"] = "- Add a New Post";
+}
+
+<div class="section">
+    <form class="" asp-controller="Home" asp-action="AddPost" method="post">
+        <h5 class="red-text"><div asp-validation-summary="ModelOnly"></div></h5>
+        <span asp-validation-for="PostContent" class="text-danger"></span>
+        <div class="input-field">
+            <label asp-for="PostContent" for="post-textarea"></label>
+            <textarea asp-for="PostContent" class="materialize-textarea validate" id="post-textarea"></textarea>
+        </div>
+        <button type="submit" class="btn waves-effect waves-light black">Idea!</button>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("Partials/_ValidationScriptsPartial")
+}

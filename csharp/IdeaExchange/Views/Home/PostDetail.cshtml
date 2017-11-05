@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "- Idea Details";
+    var post = ViewBag.current_post;
+}
+<div class="container center-align">
+    <div class="section">
+        <table class="">
+            <tr>
+                <td class="right-align" style="vertical-align:top;padding-right:10px;width:25%;">
+                    <div class="chip black" style="margin-top:15px;text-transform:uppercase;border-radius:3px;overflow:hidden;">
+                        <a class="white-text" href="/users/@ViewBag.current_post.UserId">@ViewBag.current_post.Alias says</a>
+                    </div>
+                </td>
+                <td style="vertical-align:top">
+                    <div class="card-panel hoverable flow-text">
+                        @ViewBag.current_post.PostContent
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="section center-align" style="margin-top:20px;">
+        <h5 class="thin">People Who Like This Idea...</h5>
+        <div class="divider"></div>
+        <table class="centered">
+            <thead>
+                <tr>
+                    <th>
+                        <h6>Alias</h6>
+                    </th>
+                    <th>
+                        <h6>Name</h6>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var user_like in @ViewBag.current_post_likes)
+                {
+                    <tr>
+                        <td>
+                            <a href="/users/@user_like.UserId">@user_like.Alias</a>
+                        </td>
+                        <td>
+                            @if (user_like.PostId == @ViewBag.current_post.PostId)
+                            {
+                                <span style="name">@user_like.Fname</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="section">
+        <a href="##" onClick="history.go(-1); return false;" class="waves-effect waves-light black btn"><i class="material-icons left" style="overflow:hidden;">arrow_back</i>Back</a>
+    </div>
+</div>

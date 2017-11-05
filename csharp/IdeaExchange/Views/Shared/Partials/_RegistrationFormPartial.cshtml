@@ -1,0 +1,35 @@
+@model IdeaExchange.Models.ViewModels.RegisterViewModel
+
+<h4 class="thin">Register</h4>
+<form class="col s12 section" asp-controller="Account" asp-action="Register" method="post" id="register">
+    <span asp-validation-for="Fname"></span>
+    <span asp-validation-for="Alias"></span>
+    <span asp-validation-for="REmail"></span>
+    <span asp-validation-for="RPassword"></span>
+    <span asp-validation-for="ConfirmPassword"></span>
+    <div class="input-field">
+        <input asp-for="Fname" class="validate" />
+        <label asp-for="Fname" class="active"></label>
+    </div>
+    <div class="input-field">
+        <input asp-for="Alias" class="validate" />
+        <label asp-for="Alias" class="active"></label>
+    </div>
+    <div class="input-field">
+        <input asp-for="REmail" class="validate" />
+        <label asp-for="REmail" class="active"></label>
+    </div>
+    <div class="input-field">
+        <input asp-for="RPassword" class="validate" />
+        <label asp-for="RPassword" class="active"></label>
+    </div>
+    <div class="input-field">
+        <input asp-for="ConfirmPassword" class="validate" />
+        <label asp-for="ConfirmPassword" class="active"></label>
+    </div>
+    <button type="submit" class="btn waves-effect waves-light black" name="register">Register</button>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("Partials/_ValidationScriptsPartial")
+}

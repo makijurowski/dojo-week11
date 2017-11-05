@@ -1,0 +1,16 @@
+@model IdeaExchange.Models.ViewModels.LoginViewModel
+
+<h4 class="thin">Login</h4>
+<form class="col s12 section" asp-controller="Account" asp-action="Login" method="post" id="login">
+    <span asp-validation-for="LEmail"></span>
+    <span asp-validation-for="LPassword"></span>
+    <div class="input-field">
+        <label class="active" asp-for="LEmail"></label>
+        <input asp-for="LEmail" class="validate" />
+    </div>
+    <div class="input-field">
+        <label class="active" asp-for="LPassword"></label>
+        <input asp-for="LPassword" class="validate" />
+    </div>
+    <button type="submit" class="btn waves-effect waves-light black" action="login">Log in</button>
+</form>
