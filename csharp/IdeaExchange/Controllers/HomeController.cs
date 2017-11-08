@@ -100,9 +100,9 @@ namespace IdeaExchange.Controllers
                 {
                     Posts NewPost = new Posts
                     {
-                    UserId = current_user.UserId,
-                    PostContent = incoming.PostContent,
-                    Alias = current_user.Alias
+                        UserId = current_user.UserId,
+                        PostContent = incoming.PostContent,
+                        Alias = current_user.Alias
                     };
                     await _context.Posts.AddAsync(NewPost);
                     await _context.SaveChangesAsync();
@@ -145,8 +145,8 @@ namespace IdeaExchange.Controllers
                 {
                     Likes NewLike = new Likes
                     {
-                    UserId = current_user.UserId,
-                    PostId = incoming.PostId
+                        UserId = current_user.UserId,
+                        PostId = incoming.PostId
                     };
                     await _context.Likes.AddAsync(NewLike);
                     await _context.SaveChangesAsync();
